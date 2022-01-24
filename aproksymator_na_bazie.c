@@ -13,35 +13,53 @@
  * Funkcje bazowe: n - liczba funkcji a,b - granice przedzialu aproksymacji i
  * - numer funkcji x - wspolrzedna dla ktorej obliczana jest wartosc funkcji
  */
-double
-fi(int n, double x)
-{
-double l0(double x){
-    return 1;
-}
- 
-double l1(double x){
-    return -x+1;
-}
 
-double ln(int n, double x){
+double fi(int n, double x){
     if(n==0){
-        return l0(x);
+        return 1;
     }
     else if(n==1){
-        return l1(x);
+        return (-x+1);
     }
     else{
-        return ((2*(n-1)+1-x)*ln(x,n-1)-(n-1)*ln(x,n-2))/n;
+        return ((2*(n-1)+1-x)*fi(x,n-1)-(n-1)*fi(x,n-2))/n;
     }
 }
-}
+
+
+double potega(double x, int stopien)
+{
+	int i;
+	double potega=x;
+	for(i=0; i<stopien;++i)
+	potega*=x;
+	return potega;
+}	
+
+double silnia(int n){
+	int i;
+	int a=n-1;
+	int silnia=n;
+	
+	for (i=0; i<n; ++i)
+	{silnia*=a;
+		--a;}
+	return silnia;}
 
 /* Pierwsza pochodna fi */
 double
 dfi(int n, double x)
 {
-	return (n*(fi(n, x))-n*(fi(n-1, x)))/x; 
+	double dfi;
+	int wyk=n-1;
+	if (n=0)
+		return 1;
+	else
+	{
+	for(int i=0; i<n; ++i)
+	dfi+=(1/silnia(n))*n*potega(x, wyk);
+	--wyk;	
+	} 
 }
 
 /* Druga pochodna fi */
